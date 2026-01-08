@@ -25,7 +25,7 @@ actual fun recognizeText(
                     number = CreditCardInfoType.NUMBER.extract(it.text)
                 }
                 if(CreditCardInfoType.NAME.isValid(it.text)){
-                    name = it.text
+                    name = CreditCardInfoType.NAME.extract(it.text)
                 }
                 if(CreditCardInfoType.DATE.isValid(it.text)){
                     date = CreditCardInfoType.DATE.extract(it.text)

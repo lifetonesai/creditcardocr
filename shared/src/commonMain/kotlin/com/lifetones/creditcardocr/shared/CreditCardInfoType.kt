@@ -11,7 +11,7 @@ enum class CreditCardInfoType(val regex: String) {
             return pattern.find(text)?.value ?: ""
         }
     },
-    NAME("[a-zA-Z] [a-zA-Z.]") {
+    NAME("[a-zA-Z. ]* [a-zA-Z.]*") {
         override fun isValid(text: String): Boolean {
             return this.regex.toRegex().containsMatchIn(text)
         }
