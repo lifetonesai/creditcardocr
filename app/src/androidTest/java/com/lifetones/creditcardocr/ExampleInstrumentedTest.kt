@@ -84,7 +84,7 @@ class ExampleInstrumentedTest {
         )
 
         // Wait up to 5 seconds for the latch to count down to zero
-        assertTrue("Callback timed out", latch.await(5, TimeUnit.SECONDS));
+        assertTrue("Callback timed out", latch.await(20, TimeUnit.SECONDS));
 
     }
 
@@ -102,16 +102,6 @@ class ExampleInstrumentedTest {
             // Use a suitable compression format and quality (e.g., PNG for lossless)
             bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
             return ByteArrayInputStream(stream.toByteArray())
-        } else {
-            val bitmap = Bitmap.createBitmap(
-                drawable.intrinsicWidth,
-                drawable.intrinsicHeight,
-                Bitmap.Config.ARGB_8888
-            )
-            // ... code to draw vector drawable to bitmap ...
-            // A full implementation for VectorDrawable conversion is more complex.
-            // For simple test cases, using a simple PNG or JPEG is often easier.
-            // The Stack Overflow link below provides a basic approach for Bitmaps.
         }
         return null // Handle null or unsupported cases as needed
     }

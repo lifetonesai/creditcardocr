@@ -11,6 +11,7 @@ actual fun recognizeText(
     onSuccess: (CreditCard) -> Unit,
     onFailure: (Exception) -> Unit
 ) {
+    TextRecognizerOptions.CREDIT_CARD
     val image = BitmapFactory.decodeByteArray(image, 0, image.size)
     val recognizer = TextRecognition.getClient(TextRecognizerOptions.Builder().build())
     val inputImage = InputImage.fromBitmap(image, 0)
@@ -21,13 +22,13 @@ actual fun recognizeText(
             var date = ""
             visionText.textBlocks.forEach {
                 if(CreditCardInfoType.NUMBER.isValid(it.text)){
-                    number = it.text
+                    number = CreditCardInfoType.NUMBER.extract(it.text)
                 }
                 if(CreditCardInfoType.NAME.isValid(it.text)){
                     name = it.text
                 }
                 if(CreditCardInfoType.DATE.isValid(it.text)){
-                    date = it.text
+                    date = CreditCardInfoType.DATE.extract(it.text)
                 }
             }
             val creditCard = CreditCard(
