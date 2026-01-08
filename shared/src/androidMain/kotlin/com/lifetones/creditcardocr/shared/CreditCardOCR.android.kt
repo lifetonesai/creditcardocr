@@ -20,15 +20,16 @@ actual fun recognizeText(
             var number = ""
             var name = ""
             var date = ""
+            val regexValidator  = RegexValidator()
             visionText.textBlocks.forEach {
-                if(CreditCardInfoType.NUMBER.isValid(it.text)){
-                    number = CreditCardInfoType.NUMBER.extract(it.text)
+                if(regexValidator.isValid(it.text, CreditCardInfoType.NUMBER)){
+                    number = regexValidator.extract(it.text, CreditCardInfoType.NUMBER)
                 }
-                if(CreditCardInfoType.NAME.isValid(it.text)){
-                    name = CreditCardInfoType.NAME.extract(it.text)
+                if(regexValidator.isValid(it.text, CreditCardInfoType.NAME)){
+                    name = regexValidator.extract(it.text, CreditCardInfoType.NAME)
                 }
-                if(CreditCardInfoType.DATE.isValid(it.text)){
-                    date = CreditCardInfoType.DATE.extract(it.text)
+                if(regexValidator.isValid(it.text, CreditCardInfoType.DATE)){
+                    date = regexValidator.extract(it.text, CreditCardInfoType.DATE)
                 }
             }
             val creditCard = CreditCard(
