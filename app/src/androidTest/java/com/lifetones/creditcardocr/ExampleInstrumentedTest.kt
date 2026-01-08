@@ -3,10 +3,13 @@ package com.lifetones.creditcardocr
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
+import androidx.annotation.DrawableRes
 import androidx.core.content.ContextCompat
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
+import com.lifetones.creditcardocr.shared.CreditCard
 import com.lifetones.creditcardocr.shared.recognizeText
+import junit.framework.TestCase.assertEquals
 import junit.framework.TestCase.assertTrue
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -26,13 +29,40 @@ import java.util.concurrent.TimeUnit
 class ExampleInstrumentedTest {
 
     @Test
-    fun useAppContext() {
+    fun validateCard1() {
+        validateCard(
+            R.drawable.creditcard1,
+            CreditCard(
+                number = "2221 0012 3412 3456",
+                name = "Lee M. Cardholder",
+                date = "12/23"
+            )
+        )
+    }
+
+    @Test
+    fun validateCard2() {
+        validateCard(
+            R.drawable.creditcard2,
+            CreditCard(
+                number = "4000 1234 5678 9010",
+                name = "EISHA KHANNA",
+                date = "12/20"
+            )
+        )
+
+    }
+
+    fun validateCard(
+        @DrawableRes imageResourceId: Int,
+        creditCard: CreditCard
+    ) {
         val latch = CountDownLatch(1)
         val testContext = InstrumentationRegistry.getInstrumentation().targetContext
         var inputStream: InputStream? = null
 
         try {
-            val drawable: Drawable = ContextCompat.getDrawable(testContext, R.drawable.creditcard1)!!
+            val drawable: Drawable = ContextCompat.getDrawable(testContext, imageResourceId)!!
             inputStream = drawableToInputStream(drawable)
         } catch (e: Exception) {
             e.printStackTrace()
@@ -43,11 +73,12 @@ class ExampleInstrumentedTest {
         recognizeText(
             image = byteArray,
             onSuccess = {
-                println(it)
+                assertEquals(creditCard.number, it.number)
+                assertEquals(creditCard.name, it.name)
+                assertEquals(creditCard.date, it.date)
                 latch.countDown()
             },
             onFailure = {
-                println(it)
                 latch.countDown()
             }
         )
