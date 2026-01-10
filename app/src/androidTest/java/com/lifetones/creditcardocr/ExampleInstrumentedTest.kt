@@ -8,7 +8,7 @@ import androidx.core.content.ContextCompat
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import com.lifetones.creditcardocr.shared.CreditCard
-import com.lifetones.creditcardocr.shared.recognizeText
+import com.lifetones.creditcardocr.shared.recognizeCreditCardText
 import junit.framework.TestCase.assertEquals
 import junit.framework.TestCase.assertTrue
 import org.junit.Test
@@ -70,7 +70,7 @@ class ExampleInstrumentedTest {
         assertNotNull(inputStream)
         val byteArray: ByteArray = inputStream.use { it!!.readBytes() }
 
-        recognizeText(
+        recognizeCreditCardText(
             image = byteArray,
             onSuccess = {
                 assertEquals(creditCard.number, it.number)

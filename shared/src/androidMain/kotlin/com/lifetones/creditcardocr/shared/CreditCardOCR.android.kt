@@ -6,12 +6,11 @@ import com.google.mlkit.vision.text.TextRecognition
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions
 
 
-actual fun recognizeText(
+actual fun recognizeCreditCardText(
     image: ByteArray,
     onSuccess: (CreditCard) -> Unit,
     onFailure: (Exception) -> Unit
 ) {
-    TextRecognizerOptions.CREDIT_CARD
     val image = BitmapFactory.decodeByteArray(image, 0, image.size)
     val recognizer = TextRecognition.getClient(TextRecognizerOptions.Builder().build())
     val inputImage = InputImage.fromBitmap(image, 0)
